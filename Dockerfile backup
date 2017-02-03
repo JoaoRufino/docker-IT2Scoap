@@ -1,0 +1,30 @@
+FROM pritunl/archlinux
+
+#working with the main directory
+WORKDIR /root
+
+#adding it2s repository
+
+RUN echo '[it2s]' >> /etc/pacman.conf
+RUN echo 'SigLevel = Optional TrustAll' >> /etc/pacman.conf
+RUN echo 'Server = https= https://fpga.av.it.pt/repo/archlinux/$arch' >> /etc/pacman.conf
+
+#installing requirements
+RUN pacman -Syu
+RUN pacman -S --noconfirm maven git jdk8-openjdk
+
+RUN mkdir packages
+WORKDIR /root/packages
+
+#californium instalation
+git clone https://github.com/eclipse/californium.git californium
+WORKDIR /root/californium
+mvn clean install
+
+WORKDIR /app
+
+RUN mv src/* /dev/smh
+RUN cd californium/demo-apps/cf-it2s-coap-server/
+RUN mvn clean install
+
+CMD java -jar ./target/cf-it2s-coap-server-1.0.0-SNAPSHOT.jar
