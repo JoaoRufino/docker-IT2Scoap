@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  java-jar:
+    image: java-jar
+    volumes:
+     - ./run:/app
+    ports:
+      - "5683:5683"
+    networks:
+      - back-tier
+    container_name: coapserver
+    depends_on: 
+      - maven:
+          condition: service_ended
+
+  maven:
+    image: maven-jar
+    volumes:
+     - .:/app
+    container_name: maventest
+
+    networks:
+      - back-tier
+
+networks:
+  back-tier:

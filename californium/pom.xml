@@ -155,10 +155,7 @@
 
 	<modules>
 		<module>element-connector</module>
-		<module>scandium-core</module>
 		<module>californium-core</module>
-		<module>californium-proxy</module>
-		<module>californium-osgi</module>
 		<module>demo-apps</module>
 		<module>demo-certs</module>
 	</modules>
