@@ -1,0 +1,1 @@
+go build -a -tags netgo --ldflags '-extldflags " -static"' -o it2s-coap . 
